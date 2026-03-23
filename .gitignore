@@ -1,0 +1,23 @@
+# Verificados de gitignore para Tesis HGR-sEMG
+
+# Excluir dataset (JSONs pesados)
+data/trainingJSON/
+data/testingJSON/
+
+# Excluir artefactos de Google Drive
+.tmp.drivedownload/
+
+# Excluir archivos compilados de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Excluir archivos de entorno virtual
+venv/
+.env
+
+# Excluir notebook checkpoints
+.ipynb_checkpoints/
+
+# Excluir carpetas de modelos/procesados si se vuelven muy pesadas
+# data/processed/
