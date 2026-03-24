@@ -4,7 +4,36 @@ import numpy as np
 import pandas as pd
 from typing import List
 
+def plot_signal(signal: np.ndarray, title: str = 'EMG Signal', fs: float = 200.0, save_path: str = None):
+    """
+    Grafica todos los canales de una señal EMG [T, C] en subplots apilados.
+    Args:
+        signal: array [T, C]
+        title: título del gráfico
+        fs: frecuencia de muestreo en Hz (para el eje X en segundos)
+    """
+    n_samples, n_channels = signal.shape
+    time = np.arange(n_samples) / fs
+
+    fig, axes = plt.subplots(n_channels, 1, figsize=(12, n_channels * 1.5), sharex=True)
+    if n_channels == 1:
+        axes = [axes]
+
+    for i, ax in enumerate(axes):
+        ax.plot(time, signal[:, i], linewidth=0.8)
+        ax.set_ylabel(f'CH{i+1}', fontsize=8)
+        ax.grid(True, alpha=0.3)
+
+    axes[-1].set_xlabel('Tiempo (s)')
+    fig.suptitle(title, fontsize=12)
+    plt.tight_layout()
+
+    if save_path:
+        plt.savefig(save_path, dpi=150)
+    return fig
+
 def plot_confusion_matrix(cm: np.ndarray, class_names: List[str], title: str = 'Confusion Matrix', save_path: str = None):
+
     """
     Dibuja una matriz de confusión usando Seaborn Heatmap.
     """

@@ -20,4 +20,4 @@ venv/
 .ipynb_checkpoints/
 
 # Excluir carpetas de modelos/procesados si se vuelven muy pesadas
-# data/processed/
+data/processed/

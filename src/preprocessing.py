@@ -1,7 +1,16 @@
 import numpy as np
 from scipy.signal import butter, filtfilt
 
+from typing import List
 from src.config import Config
+
+def segment_gesture(signal: np.ndarray, ground_truth_index: list) -> np.ndarray:
+    """Recorta la señal EMG para quedarse solo con la acción (elimina el reposo)."""
+    if ground_truth_index is None or len(ground_truth_index) < 2:
+        return signal
+    start = int(ground_truth_index[0])
+    end = int(ground_truth_index[-1])
+    return signal[start:end, :]
 
 def rectify_emg(signal: np.ndarray, method: str = 'abs') -> np.ndarray:
     """
