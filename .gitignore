@@ -6,6 +6,7 @@ data/testingJSON/
 
 # Excluir artefactos de Google Drive
 .tmp.drivedownload/
+.tmp.driveupload/
 
 # Excluir archivos compilados de Python
 __pycache__/
