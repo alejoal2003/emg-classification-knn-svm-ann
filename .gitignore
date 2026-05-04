@@ -3,6 +3,7 @@
 # Excluir dataset (JSONs pesados)
 data/trainingJSON/
 data/testingJSON/
+data/longitudinal/
 
 # Excluir artefactos de Google Drive
 .tmp.drivedownload/
