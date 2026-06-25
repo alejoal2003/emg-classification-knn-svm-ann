@@ -8,8 +8,8 @@ from pathlib import Path
 from typing import List, Dict, Tuple, Optional
 import warnings
 
-# Gestos que se clasifican (relax se omite)
-GESTURES = ['fist', 'open', 'pinch', 'waveIn', 'waveOut']
+# Gestos que se clasifican (incluye relax)
+GESTURES = ['fist', 'open', 'pinch', 'waveIn', 'waveOut', 'relax']
 
 def _load_gesture_mat(mat_path: Path, gesture_name: str) -> Optional[np.ndarray]:
     """
@@ -34,14 +34,28 @@ def _load_gesture_mat(mat_path: Path, gesture_name: str) -> Optional[np.ndarray]
         emg_list = []
 
         for i in range(n_reps):
-            try:
-                emg_raw = gesture_data[i]['emg']
-            except (IndexError, TypeError, KeyError, ValueError):
-                # Si gesture_data[i] ya es un array de floats y no tiene campos
-                emg_raw = gesture_data[i]
+            item = gesture_data[i]
+            
+            # Skip empty elements
+            if isinstance(item, np.ndarray) and item.size == 0:
+                continue
+            
+            if hasattr(item, 'emg'):
+                emg_raw = item.emg
+            elif isinstance(item, dict) and 'emg' in item:
+                emg_raw = item['emg']
+            else:
+                try:
+                    emg_raw = item['emg']
+                except (IndexError, TypeError, KeyError, ValueError):
+                    emg_raw = item
 
-            emg = np.array(emg_raw, dtype=np.float32)
-            emg_list.append(emg)
+            try:
+                emg = np.array(emg_raw, dtype=np.float32)
+                if emg.size > 0 and len(emg.shape) >= 2:
+                    emg_list.append(emg)
+            except Exception as e:
+                pass
 
         if not emg_list:
             print(f"[mat_loader] WARN: 0 repeticiones encontradas en {mat_path}")

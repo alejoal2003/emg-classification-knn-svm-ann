@@ -19,8 +19,8 @@ class Config:
     N_CHANNELS = 8
     
     # Clases (Gestos)
-    GESTURES = ['fist', 'open', 'pinch', 'waveIn', 'waveOut']
-    INCLUDE_NOGESTURE = False  # Cambiar a True si se quiere incluir la clase de reposo
+    GESTURES = ['fist', 'open', 'pinch', 'waveIn', 'waveOut', 'relax']
+    INCLUDE_NOGESTURE = True
     
     # Parámetros de ventaneo (inspirado en la guía de MATLAB)
     WINDOW_SIZE = 300  # 1.5 segundos a 200 Hz
